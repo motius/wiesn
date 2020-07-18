@@ -1,0 +1,13 @@
+/home/stuart/motius-projects/wiesn-parcel/target/release/deps/quote-49c52e8222885ecb.rmeta: /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/lib.rs /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/ext.rs /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/format.rs /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/ident_fragment.rs /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/to_tokens.rs /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/runtime.rs /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/spanned.rs
+
+/home/stuart/motius-projects/wiesn-parcel/target/release/deps/libquote-49c52e8222885ecb.rlib: /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/lib.rs /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/ext.rs /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/format.rs /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/ident_fragment.rs /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/to_tokens.rs /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/runtime.rs /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/spanned.rs
+
+/home/stuart/motius-projects/wiesn-parcel/target/release/deps/quote-49c52e8222885ecb.d: /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/lib.rs /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/ext.rs /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/format.rs /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/ident_fragment.rs /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/to_tokens.rs /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/runtime.rs /home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/spanned.rs
+
+/home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/lib.rs:
+/home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/ext.rs:
+/home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/format.rs:
+/home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/ident_fragment.rs:
+/home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/to_tokens.rs:
+/home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/runtime.rs:
+/home/stuart/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.7/src/spanned.rs:

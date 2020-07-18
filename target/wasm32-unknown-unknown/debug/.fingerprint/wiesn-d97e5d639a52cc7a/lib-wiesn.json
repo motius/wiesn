@@ -1,0 +1,1 @@
+{"rustc":13441485544453668336,"features":"[]","target":4018648376357232497,"profile":14996655781355331481,"path":10872709659218687626,"deps":[[12959566371055771257,"wasm_bindgen",false,4385383861399550368]],"local":[{"CheckDepInfo":{"dep_info":"wasm32-unknown-unknown/debug/.fingerprint/wiesn-d97e5d639a52cc7a/dep-lib-wiesn"}}],"rustflags":[],"metadata":15112804424990425824}

@@ -1,0 +1,1 @@
+{"id":"src/lib.rs","dependencies":[{"name":"/home/stuart/motius-projects/wiesn-parcel/Cargo.toml","includedInParent":true,"mtime":1595072843459}],"generated":{"wasm":{"path":"/home/stuart/motius-projects/wiesn-parcel/target/wasm32-unknown-unknown/release/wiesn.wasm","mtime":1595073234460}},"sourceMaps":null,"error":null,"hash":"d214b7700ae8a453da0e1d0a1f88a929","cacheData":{}}
