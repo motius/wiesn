@@ -1,16 +1,17 @@
 <template>
   <div id="app">
+    <h2>Recipe</h2>
     <Form>
       <Input
         :id="volume"
         v-model="volume"
         type="number"
         label="Volume"
+        step="1"
       /></Input>
-      <h1>{{originalGravity}}</h1>
-      <h2>Malts</h2>
+      <h3>Malts</h3>
       <div v-for="(maltInRecipe, index) in maltsInRecipe">
-        <h3>{{maltInRecipe.malt.name}}</h3>
+        <h4>{{maltInRecipe.malt.name}}</h4>
         <Input
           :id="maltInRecipe.malt.id"
           @change="updateMaltMass(index, $event)"
@@ -26,12 +27,42 @@
         </option>
       </Select>
       <Button @click="addSelectedMalt" :disabled="selectedMalt === ''">Add Malt</Button>
+      <h3>Yeast</h3>
+      <Select v-model="selectedYeast">
+        <option value=''>Select Yeast</option>
+        <option v-for="availableYeast in availableYeasts" :value="availableYeast.id">
+          {{availableYeast.name}}
+        </option>
+      </Select>
     </Form>
+    <h2>Equipment</h2>
+    <Form>
+      <Input
+        :id="efficiency"
+        v-model="efficiency"
+        type="number"
+        label="Efficiency"
+        step="1"
+      /></Input>
+    </Form>
+    <h2>Vitals</h2>
+    <ul>
+      <li>OG: {{originalGravity}}</li>
+      <li>FG: {{finalGravity}}</li>
+      <li>SRM: {{color}}</li>
+      <div :style="{ background: 'linear-gradient(to right, #fee799, #db7d00, #963500, #5b0d01, #35090a)', width: '500px', height: '10px' }" ></div>
+    </ul>
   </div>
 </template>
 
 <script>
-import { Recipe } from './lib.rs'
+import {
+  Recipe,
+  Equipment,
+  get_original_gravity,
+  get_final_gravity,
+  get_color,
+} from './lib.rs'
 import Input from './components/form/Input'
 import Form from './components/form/Form'
 import Select from './components/form/Select'
@@ -46,6 +77,7 @@ export default {
   },
   data: () => ({
     recipe: Recipe.new(),
+    equipment: Equipment.new(0.7),
     selectedMalt: '',
   }),
   methods: {
@@ -66,15 +98,44 @@ export default {
         this.recipe = this.recipe.set_volume(newValue)
       },
     },
+    efficiency: {
+      get: function() {
+        return Math.round(this.equipment.get_efficiency() * 100)
+      },
+      set: function(newValue) {
+        this.equipment = this.equipment.set_efficiency(newValue / 100)
+      },
+    },
     originalGravity: function() {
-      return this.recipe.get_original_gravity()
+      return get_original_gravity(this.recipe, this.equipment).toFixed(4)
+    },
+    finalGravity: function() {
+      return get_final_gravity(this.recipe, this.equipment).toFixed(4)
+    },
+    color: function() {
+      return get_color(this.recipe).toFixed(2)
     },
     maltsInRecipe: function() {
       return JSON.parse(this.recipe.get_malts_in_recipe())
     },
     availableMalts: function() {
       return JSON.parse(this.recipe.get_available_malts())
-    }
+    },
+    availableYeasts: function() {
+      return JSON.parse(this.recipe.get_available_yeasts())
+    },
+    selectedYeast: {
+      get: function() {
+        const yeast = JSON.parse(this.recipe.get_yeast())
+        if (yeast) {
+          return yeast.id
+        }
+        return ''
+      },
+      set: function(newValue) {
+        this.recipe = this.recipe.change_yeast(newValue)
+      },
+    },
   },
 }
 </script>
