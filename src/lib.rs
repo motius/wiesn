@@ -24,6 +24,7 @@ struct MaltInRecipe {
 }
 
 #[wasm_bindgen]
+#[derive(Serialize)]
 pub struct Recipe {
     malts_in_recipe: Vec<MaltInRecipe>,
     volume: f32,
@@ -45,10 +46,15 @@ static malts: [Malt; 2] = [
     }
 ];
 
-static yeasts: [Yeast; 1] = [
+static yeasts: [Yeast; 2] = [
     Yeast {
         id: "w-34/70",
         name: "Saflager W-34/70",
+        attenuation: 0.82,
+    },
+    Yeast {
+        id: "k-97",
+        name: "Safale K-97",
         attenuation: 0.82,
     }
 ];
@@ -67,8 +73,9 @@ impl Recipe {
         }
     }
 
-    pub fn get_volume(&self) -> f32 {
-        self.volume
+
+    pub fn get_json(&self) -> String {
+        json!(&self).to_string()
     }
 
     pub fn set_volume(&self, value: f32) -> Recipe {
@@ -81,14 +88,6 @@ impl Recipe {
             volume,
             yeast,
         }
-    }
-
-    pub fn get_malts_in_recipe(&self) -> String {
-        json!(self.malts_in_recipe).to_string()
-    }
-
-    pub fn get_yeast(&self) -> String {
-        json!(self.yeast).to_string()
     }
 
     pub fn update_malt_mass(&self, index: usize, new_mass: f32) -> Recipe {
@@ -154,17 +153,10 @@ impl Recipe {
             }
         }
     }
-
-    pub fn get_available_malts(&self) -> String {
-        json!(malts).to_string()
-    }
-
-    pub fn get_available_yeasts(&self) -> String {
-        json!(yeasts).to_string()
-    }
 }
 
 #[wasm_bindgen]
+#[derive(Serialize)]
 pub struct Equipment {
     efficiency: f32,
 }
@@ -177,8 +169,8 @@ impl Equipment {
         }
     }
 
-    pub fn get_efficiency(&self) -> f32 {
-        self.efficiency
+    pub fn get_json(&self) -> String {
+        json!(&self).to_string()
     }
 
     pub fn set_efficiency(&self, value: f32) -> Equipment {
@@ -188,6 +180,16 @@ impl Equipment {
             efficiency,
         }
     }
+}
+
+#[wasm_bindgen]
+pub fn get_available_malts() -> String {
+    json!(malts).to_string()
+}
+
+#[wasm_bindgen]
+pub fn get_available_yeasts() -> String {
+    json!(yeasts).to_string()
 }
 
 #[wasm_bindgen]

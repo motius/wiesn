@@ -1,6 +1,6 @@
 <template>
   <button
-    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+    class="bg-blue-500 my-3 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
     @click="$emit('click', $event)"
     :disabled="disabled"
   >

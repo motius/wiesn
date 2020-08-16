@@ -1,42 +1,39 @@
 <template>
-  <div>
-    <h2>Recipe</h2>
-    <Form>
+  <Form heading="Recipe">
+    <Input
+      :id="volume"
+      :value="volume"
+      @change="setVolume"
+      type="number"
+      label="Volume"
+      step="1"
+    /></Input>
+    <h3>Malts</h3>
+    <div v-for="(maltInRecipe, index) in maltsInRecipe">
+      <h4>{{maltInRecipe.malt.name}}</h4>
       <Input
-        :id="volume"
-        :value="volume"
-        @change="setVolume"
+        :id="maltInRecipe.malt.id"
+        @change="updateMaltMass(index, $event)"
+        :value="maltInRecipe.mass"
         type="number"
-        label="Volume"
-        step="1"
-      /></Input>
-      <h3>Malts</h3>
-      <div v-for="(maltInRecipe, index) in maltsInRecipe">
-        <h4>{{maltInRecipe.malt.name}}</h4>
-        <Input
-          :id="maltInRecipe.malt.id"
-          @change="updateMaltMass(index, $event)"
-          :value="maltInRecipe.mass"
-          type="number"
-          label="Mass"
-        ></Input>
-      </div>
-      <Select v-model="selectedMalt">
-        <option value=''>Select Malt</option>
-        <option v-for="availableMalt in availableMalts" :value="availableMalt.id">
-          {{availableMalt.name}}
-        </option>
-      </Select>
-      <Button @click="addSelectedMalt" :disabled="selectedMalt === ''">Add Malt</Button>
-      <h3>Yeast</h3>
-      <Select :value="selectedYeast" @change="changeYeast">
-        <option value=''>Select Yeast</option>
-        <option v-for="availableYeast in availableYeasts" :value="availableYeast.id">
-          {{availableYeast.name}}
-        </option>
-      </Select>
-    </Form>
-  </div>
+        label="Mass"
+      ></Input>
+    </div>
+    <Select v-model="selectedMalt">
+      <option value=''>Select Malt</option>
+      <option v-for="availableMalt in availableMalts" :value="availableMalt.id">
+        {{availableMalt.name}}
+      </option>
+    </Select>
+    <Button @click="addSelectedMalt" :disabled="selectedMalt === ''">Add Malt</Button>
+    <h3>Yeast</h3>
+    <Select :value="selectedYeast" @change="changeYeast">
+      <option value=''>Select Yeast</option>
+      <option v-for="availableYeast in availableYeasts" :value="availableYeast.id">
+        {{availableYeast.name}}
+      </option>
+    </Select>
+  </Form>
 </template>
 
 <script>
@@ -44,6 +41,7 @@ import Input from './components/form/Input'
 import Form from './components/form/Form'
 import Select from './components/form/Select'
 import Button from './components/form/Button'
+import { get_available_malts, get_available_yeasts } from './lib.rs'
 
 export default {
   components: {
@@ -71,22 +69,24 @@ export default {
     },
   },
   computed: {
+    obj: function() {
+      return JSON.parse(this.$data.$state.recipe.get_json())
+    },
     volume: function() {
-      return this.$data.$state.recipe.get_volume()
+      return this.obj.volume
     },
     maltsInRecipe: function() {
-      return JSON.parse(this.$data.$state.recipe.get_malts_in_recipe())
+      return this.obj.malts_in_recipe
     },
     availableMalts: function() {
-      return JSON.parse(this.$data.$state.recipe.get_available_malts())
+      return JSON.parse(get_available_malts())
     },
     availableYeasts: function() {
-      return JSON.parse(this.$data.$state.recipe.get_available_yeasts())
+      return JSON.parse(get_available_yeasts())
     },
     selectedYeast: function() {
-      const yeast = JSON.parse(this.$data.$state.recipe.get_yeast())
-      if (yeast) {
-        return yeast.id
+      if (this.obj.yeast) {
+        return this.obj.yeast.id
       }
       return ''
     },

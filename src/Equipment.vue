@@ -1,17 +1,14 @@
 <template>
-  <div>
-    <h2>Equipment</h2>
-    <Form>
-      <Input
-        :id="efficiency"
-        :value="efficiency"
-        @change="setEfficiency"
-        type="number"
-        label="Efficiency"
-        step="1"
-      /></Input>
-    </Form>
-  </div>
+  <Form heading="Equipment">
+    <Input
+      :id="efficiency"
+      :value="efficiency"
+      @change="setEfficiency"
+      type="number"
+      label="Efficiency"
+      step="1"
+    /></Input>
+  </Form>
 </template>
 
 <script>
@@ -31,8 +28,11 @@ export default {
     },
   },
   computed: {
+    obj: function() {
+      return JSON.parse(this.$data.$state.equipment.get_json())
+    },
     efficiency: function() {
-      return Math.round(this.$data.$state.equipment.get_efficiency() * 100)
+      return Math.round(this.obj.efficiency * 100)
     },
   },
 }

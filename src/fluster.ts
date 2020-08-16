@@ -3,7 +3,6 @@ export default {
     Vue.mixin({
       data: () => ({
         $state: options.state,
-        $test123: '123',
       }),
       methods: {
         $update: options.update,
