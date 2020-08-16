@@ -171,9 +171,9 @@ pub struct Equipment {
 
 #[wasm_bindgen]
 impl Equipment {
-    pub fn new(efficiency: f32) -> Equipment {
+    pub fn new() -> Equipment {
         Equipment {
-            efficiency,
+            efficiency: 0.7,
         }
     }
 
