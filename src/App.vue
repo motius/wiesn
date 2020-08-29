@@ -1,8 +1,12 @@
 <template>
-  <div id="app">
-    <Recipe></Recipe>
-    <Equipment></Equipment>
-    <Vitals></Vitals>
+  <div id="app" class="flex flex-row justify-around">
+    <div>
+      <Recipe></Recipe>
+      <Equipment></Equipment>
+    </div>
+    <div>
+      <Vitals></Vitals>
+    </div>
   </div>
 </template>
 

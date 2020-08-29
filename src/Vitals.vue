@@ -10,6 +10,11 @@
         <div :style="{ position: 'absolute', left: 12.5 * color, top: -2, height: '14px', width: '3px', backgroundColor: 'black' }"></div>
         <div :style="{ background: 'linear-gradient(to right, #fee799, #db7d00, #963500, #5b0d01, #35090a)', width: '100%', height: '10px' }" ></div>
       </div>
+      <li>BU/GU: {{flavorRatio}}</li>
+      <div :style="{ position: 'relative', width: '500px' }">
+        <div :style="{ position: 'absolute', left: 500 * flavorRatio, top: -2, height: '14px', width: '3px', backgroundColor: 'black' }"></div>
+        <div :style="{ background: 'linear-gradient(to right, #db7d00, white, #6f8e02)', width: '100%', height: '10px' }" ></div>
+      </div>
     </ul>
   </DisplayBox>
 </template>
@@ -43,6 +48,10 @@ export default {
     bitterness: function() {
       return get_bitterness(this.$data.$state.recipe, this.$data.$state.equipment).toFixed(2)
     },
+    flavorRatio: function() {
+      if (this.originalGravity === '1.000') return '-'
+      return (this.bitterness / (this.originalGravity - 1) / 1000).toFixed(2)
+    }
   },
 }
 </script>
