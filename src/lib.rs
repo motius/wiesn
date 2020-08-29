@@ -23,15 +23,23 @@ struct MaltInRecipe {
     mass: f32,
 }
 
+#[derive(Copy, Clone, Serialize)]
+struct Hop {
+    alpha_acid: f32,
+    mass: f32,
+    boil_time: f32,
+}
+
 #[wasm_bindgen]
 #[derive(Serialize)]
 pub struct Recipe {
     malts_in_recipe: Vec<MaltInRecipe>,
     volume: f32,
     yeast: Option<Yeast>,
+    hops: Vec<Hop>,
 }
 
-static malts: [Malt; 2] = [
+static MALTS: [Malt; 2] = [
     Malt {
         id: "2-row-barley",
         name: "2 Row Barley",
@@ -46,7 +54,7 @@ static malts: [Malt; 2] = [
     }
 ];
 
-static yeasts: [Yeast; 2] = [
+static YEASTS: [Yeast; 2] = [
     Yeast {
         id: "w-34/70",
         name: "Saflager W-34/70",
@@ -65,14 +73,15 @@ impl Recipe {
         let volume = 23.0;
         let malts_in_recipe = vec![];
         let yeast = None;
+        let hops = vec![];
 
         Recipe {
             malts_in_recipe,
             volume,
             yeast,
+            hops,
         }
     }
-
 
     pub fn get_json(&self) -> String {
         json!(&self).to_string()
@@ -82,11 +91,13 @@ impl Recipe {
         let malts_in_recipe = self.malts_in_recipe.clone();
         let volume = value;
         let yeast = self.yeast;
+        let hops = self.hops.clone();
 
         Recipe {
             malts_in_recipe,
             volume,
             yeast,
+            hops,
         }
     }
 
@@ -94,6 +105,7 @@ impl Recipe {
         let mut malts_in_recipe = self.malts_in_recipe.clone();
         let volume = self.volume;
         let yeast = self.yeast;
+        let hops = self.hops.clone();
 
         malts_in_recipe[index].mass = new_mass;
 
@@ -101,19 +113,22 @@ impl Recipe {
             malts_in_recipe,
             volume,
             yeast,
+            hops,
         }
     }
 
-    pub fn add_malt(&self, maltId: String) -> Recipe {
+    pub fn add_malt(&self, malt_id: String) -> Recipe {
         let mut malts_in_recipe = self.malts_in_recipe.clone();
         let volume = self.volume;
         let yeast = self.yeast;
+        let hops = self.hops.clone();
 
-        return match malts.iter().find(|malt| malt.id == maltId) {
+        return match MALTS.iter().find(|malt| malt.id == malt_id) {
             None => return Recipe {
                 malts_in_recipe,
                 volume,
                 yeast,
+                hops,
             },
             Some(found_malt) => {
                 malts_in_recipe.push(MaltInRecipe {
@@ -125,22 +140,93 @@ impl Recipe {
                     malts_in_recipe,
                     volume,
                     yeast,
+                    hops,
                 };
             }
         }
     }
 
-    pub fn change_yeast(&self, yeast_id: String) -> Recipe {
-        let mut malts_in_recipe = self.malts_in_recipe.clone();
+    pub fn add_hop(&self) -> Recipe {
+        let malts_in_recipe = self.malts_in_recipe.clone();
         let volume = self.volume;
+        let yeast = self.yeast;
+        let mut hops = self.hops.clone();
 
-        return match yeasts.iter().find(|yeast| yeast.id == yeast_id) {
+        hops.push(Hop {
+            mass: 0.0,
+            alpha_acid: 0.0,
+            boil_time: 0.0,
+        });
+
+        return Recipe {
+            malts_in_recipe,
+            volume,
+            yeast,
+            hops,
+        }
+    }
+
+    pub fn update_hop_mass(&self, index: usize, new_value: f32) -> Recipe {
+        let malts_in_recipe = self.malts_in_recipe.clone();
+        let volume = self.volume;
+        let yeast = self.yeast;
+        let mut hops = self.hops.clone();
+
+        hops[index].mass = new_value;
+
+        return Recipe {
+            malts_in_recipe,
+            volume,
+            yeast,
+            hops,
+        }
+    }
+
+    pub fn update_hop_boil(&self, index: usize, new_value: f32) -> Recipe {
+        let malts_in_recipe = self.malts_in_recipe.clone();
+        let volume = self.volume;
+        let yeast = self.yeast;
+        let mut hops = self.hops.clone();
+
+        hops[index].boil_time = new_value;
+
+        return Recipe {
+            malts_in_recipe,
+            volume,
+            yeast,
+            hops,
+        }
+    }
+
+    pub fn update_hop_alpha_acid(&self, index: usize, new_value: f32) -> Recipe {
+        let malts_in_recipe = self.malts_in_recipe.clone();
+        let volume = self.volume;
+        let yeast = self.yeast;
+        let mut hops = self.hops.clone();
+
+        hops[index].alpha_acid = new_value;
+
+        return Recipe {
+            malts_in_recipe,
+            volume,
+            yeast,
+            hops,
+        }
+    }
+
+    pub fn change_yeast(&self, yeast_id: String) -> Recipe {
+        let malts_in_recipe = self.malts_in_recipe.clone();
+        let volume = self.volume;
+        let hops = self.hops.clone();
+
+        return match YEASTS.iter().find(|yeast| yeast.id == yeast_id) {
             None => {
                 let yeast = self.yeast;
                 return Recipe {
                     malts_in_recipe,
                     volume,
                     yeast,
+                    hops,
                 };
             },
             Some(found_yeast) => {
@@ -149,6 +235,7 @@ impl Recipe {
                     malts_in_recipe,
                     volume,
                     yeast,
+                    hops,
                 };
             }
         }
@@ -184,12 +271,12 @@ impl Equipment {
 
 #[wasm_bindgen]
 pub fn get_available_malts() -> String {
-    json!(malts).to_string()
+    json!(MALTS).to_string()
 }
 
 #[wasm_bindgen]
 pub fn get_available_yeasts() -> String {
-    json!(yeasts).to_string()
+    json!(YEASTS).to_string()
 }
 
 #[wasm_bindgen]
@@ -215,4 +302,17 @@ pub fn get_final_gravity(recipe: &Recipe, equipment: &Equipment) -> f32 {
 pub fn get_color(recipe: &Recipe) -> f32 { // srm
     let mcu = recipe.malts_in_recipe.iter().fold(0.0, |sum, malt| sum + malt.malt.color * malt.mass) / recipe.volume;
     6.53224 * mcu.powf(0.6959)
+}
+
+fn get_hop_bitterness(hop: &Hop, gravity: f32, volume: f32) -> f32 {
+    let aau = hop.mass * hop.alpha_acid;
+    let utilization = 1.65 * 0.000125_f32.powf(gravity - 1.0) * (1.0 - 2.71828_f32.powf(-0.04 * hop.boil_time)) / 4.15;
+
+    aau * utilization * 11.0 / volume // 10 for milligrams + percent -> grams + fraction. 1.1 assumes pellets
+}
+
+#[wasm_bindgen]
+pub fn get_bitterness(recipe: &Recipe, equipment: &Equipment) -> f32 {
+    let gravity = get_original_gravity(recipe, equipment);
+    recipe.hops.iter().fold(0.0, |sum, hop| sum + get_hop_bitterness(hop, gravity, recipe.volume))
 }

@@ -26,6 +26,32 @@
       </option>
     </Select>
     <Button @click="addSelectedMalt" :disabled="selectedMalt === ''">Add Malt</Button>
+    <h3>Hops</h3>
+    <div v-for="(hop, index) in hops">
+      <Input
+        :id="'mass-' + index"
+        @change="updateHopMass(index, $event)"
+        :value="hop.mass"
+        type="number"
+        label="Mass"
+      ></Input>
+      <Input
+        :id="'acid-' + index"
+        @change="updateHopAlphaAcid(index, $event)"
+        :value="hop.alpha_acid.toFixed(1)"
+        type="number"
+        label="Alpha Acid"
+        step="0.1"
+      ></Input>
+      <Input
+        :id="'boil-' + index"
+        @change="updateHopBoil(index, $event)"
+        :value="hop.boil_time"
+        type="number"
+        label="Boil Time"
+      ></Input>
+    </div>
+    <Button @click="addHop">Add Hop</Button>
     <h3>Yeast</h3>
     <Select :value="selectedYeast" @change="changeYeast">
       <option value=''>Select Yeast</option>
@@ -57,6 +83,18 @@ export default {
     updateMaltMass: function(index, event) {
       this.$update('recipe', this.$data.$state.recipe.update_malt_mass(index, event.currentTarget.value))
     },
+    addHop: function() {
+      this.$update('recipe', this.$data.$state.recipe.add_hop())
+    },
+    updateHopMass: function(index, event) {
+      this.$update('recipe', this.$data.$state.recipe.update_hop_mass(index, event.currentTarget.value))
+    },
+    updateHopBoil: function(index, event) {
+      this.$update('recipe', this.$data.$state.recipe.update_hop_boil(index, event.currentTarget.value))
+    },
+    updateHopAlphaAcid: function(index, event) {
+      this.$update('recipe', this.$data.$state.recipe.update_hop_alpha_acid(index, event.currentTarget.value))
+    },
     addSelectedMalt: function() {
       this.$update('recipe', this.$data.$state.recipe.add_malt(this.selectedMalt))
       this.selectedMalt = ''
@@ -77,6 +115,9 @@ export default {
     },
     maltsInRecipe: function() {
       return this.obj.malts_in_recipe
+    },
+    hops: function() {
+      return this.obj.hops
     },
     availableMalts: function() {
       return JSON.parse(get_available_malts())

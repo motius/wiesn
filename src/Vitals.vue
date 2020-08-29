@@ -4,6 +4,7 @@
       <li>OG: {{originalGravity}}</li>
       <li>FG: {{finalGravity}}</li>
       <li>ABV: {{abv}}%</li>
+      <li>IBU: {{bitterness}}</li>
       <li>SRM: {{color}}</li>
       <div :style="{ position: 'relative', width: '500px' }">
         <div :style="{ position: 'absolute', left: 12.5 * color, top: -2, height: '14px', width: '3px', backgroundColor: 'black' }"></div>
@@ -18,6 +19,7 @@ import {
   get_original_gravity,
   get_final_gravity,
   get_color,
+  get_bitterness,
 } from './lib.rs'
 import DisplayBox from './components/DisplayBox'
 
@@ -37,6 +39,9 @@ export default {
     },
     color: function() {
       return get_color(this.$data.$state.recipe).toFixed(2)
+    },
+    bitterness: function() {
+      return get_bitterness(this.$data.$state.recipe, this.$data.$state.equipment).toFixed(2)
     },
   },
 }

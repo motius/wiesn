@@ -16,6 +16,7 @@
         @input="$emit('input', $event.target.value)"
         @change="$emit('change', $event)"
         :type="type"
+        :step="step"
       ></input>
     </div>
   </div>
@@ -23,6 +24,6 @@
 
 <script>
 export default {
-  props: ['type', 'value', 'label', 'id']
+  props: ['type', 'value', 'label', 'id', 'step']
 }
 </script>
