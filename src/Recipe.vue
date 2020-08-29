@@ -7,6 +7,7 @@
       type="number"
       label="Volume"
       step="1"
+      unit="L"
     /></Input>
     <h3>Malts</h3>
     <div v-for="(maltInRecipe, index) in maltsInRecipe">
@@ -17,6 +18,7 @@
         :value="maltInRecipe.mass"
         type="number"
         label="Mass"
+        unit="kg"
       ></Input>
     </div>
     <Select v-model="selectedMalt">
@@ -34,6 +36,7 @@
         :value="hop.mass"
         type="number"
         label="Mass"
+        unit="g"
       ></Input>
       <Input
         :id="'acid-' + index"
@@ -42,6 +45,7 @@
         type="number"
         label="Alpha Acid"
         step="0.1"
+        unit="%"
       ></Input>
       <Input
         :id="'boil-' + index"
@@ -49,6 +53,7 @@
         :value="hop.boil_time"
         type="number"
         label="Boil Time"
+        unit="min"
       ></Input>
     </div>
     <Button @click="addHop">Add Hop</Button>

@@ -7,6 +7,7 @@
       type="number"
       label="Efficiency"
       step="1"
+      unit="%"
     /></Input>
   </Form>
 </template>
